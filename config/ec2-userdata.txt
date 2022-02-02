@@ -1,0 +1,8 @@
+wget https://github.com/purnaresa/dum-dum-app/releases/download/beta/run-linux-amd64 -O dumdumapp
+chmod +x dumdumapp
+sudo mkdir /root/go
+sudo mv dumdumapp /root/go/
+wget service
+sudo vim /etc/systemd/system/dumdumapp.service
+sudo systemctl start dumdumapp.service
+sudo systemctl enable dumdumapp.service
