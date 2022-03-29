@@ -1,9 +1,20 @@
 #!/bin/bash
 wget https://github.com/purnaresa/dum-dum-app/releases/download/beta/run-linux-amd64 -O dumdumapp
 chmod +x dumdumapp
-sudo mkdir /root/go
-sudo mv dumdumapp /root/go/
+sudo mkdir /opt/dumdumapp
+sudo mv dumdumapp /opt/dumdumapp
+
 wget https://github.com/purnaresa/dum-dum-app/releases/download/0.2-beta/dum-dum-app.service -O dumdumapp.service
 sudo mv dumdumapp.service /etc/systemd/system/
 sudo systemctl start dumdumapp.service
 sudo systemctl enable dumdumapp.service
+
+wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.2-beta/custom-healthcheckapp -O custom-healthcheckapp
+chmod +x custom-healthcheckapp
+sudo mkdir /opt/custom-healthcheck
+sudo mv custom-healthcheckapp /opt/custom-healthcheck
+
+wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.2-beta/custom-healthcheck.service -O custom-healthcheck.service
+sudo mv custom-healthcheck.service /etc/systemd/system/
+sudo systemctl start custom-healthcheck.service
+sudo systemctl enable custom-healthcheck.service
