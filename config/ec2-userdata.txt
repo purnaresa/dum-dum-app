@@ -1,20 +1,34 @@
 #!/bin/bash
-wget https://github.com/purnaresa/dum-dum-app/releases/download/beta/run-linux-amd64 -O dumdumapp
+wget https://github.com/purnaresa/dum-dum-app/releases/download/0.3-beta/dumdumapp -O dumdumapp
 chmod +x dumdumapp
 sudo mkdir /opt/dumdumapp
 sudo mv dumdumapp /opt/dumdumapp
 
-wget https://github.com/purnaresa/dum-dum-app/releases/download/0.2-beta/dum-dum-app.service -O dumdumapp.service
+wget https://github.com/purnaresa/dum-dum-app/releases/download/0.3-beta/dum-dum-app.service -O dumdumapp.service
 sudo mv dumdumapp.service /etc/systemd/system/
 sudo systemctl start dumdumapp.service
 sudo systemctl enable dumdumapp.service
 
-wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.2-beta/custom-healthcheckapp -O custom-healthcheckapp
+wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.3-beta/custom-healthcheckapp -O custom-healthcheckapp
 chmod +x custom-healthcheckapp
 sudo mkdir /opt/custom-healthcheck
 sudo mv custom-healthcheckapp /opt/custom-healthcheck
 
-wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.2-beta/custom-healthcheck.service -O custom-healthcheck.service
+wget https://github.com/purnaresa/custom-healthcheck/releases/download/v0.3-beta/custom-healthcheck.service -O custom-healthcheck.service
 sudo mv custom-healthcheck.service /etc/systemd/system/
 sudo systemctl start custom-healthcheck.service
 sudo systemctl enable custom-healthcheck.service
+
+sudo mkdir /etc/custom-healthcheck
+sudo mkdir /etc/custom-healthcheck/config
+sudo echo "
+REGION: ap-southeast-1
+SQS_ENDPOINT: https://sqs.ap-southeast-1.amazonaws.com/*/set-unhealthy-ec2
+APPNAME: appname
+APPURL: http://localhost:8080/healthcheck
+HEALTHY_THRESHOLD: 3
+UNHEALTHY_THRESHOLD: 3
+INTERVAL: 5
+LOG_LEVEL: info
+LOG_FILE_WRITE: false" >> 
+sudo mv config.yaml /etc/custom-healthcheck/config
